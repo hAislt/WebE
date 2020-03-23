@@ -1,0 +1,29 @@
+h2 {
+    background-color:red;
+    color: #000000;
+  }
+
+  #logo{   
+      display: block;
+      width: 70%;
+      margin: 0 auto;
+      text-align: center;
+  }
+
+  #bilder{
+      margin-top: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+  }
+
+  #map{
+    margin-top: 10px;
+    width: 50%;
+  }
+
+  #truck{
+    float: left; 
+    width: 30%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
