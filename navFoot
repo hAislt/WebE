@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="WebShop">
+  <meta name="author" content="Mario">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Web Shop</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="bilder.js" type="text/javascript"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/heroic-features.css" rel="stylesheet">
+  <link href="main.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Web Shop</a>
+      <!-- The form -->
+<form class="example" action="action_page.php">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><i class="fa fa-search"></i></button>
+  </form>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Produkte</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Kontakt</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Anmelden</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+<main>
+
+</main>
+
+
+  <footer class="py-5 bg-dark">  
+    <!-- Footer Links -->
+    <div class="container text-center text-md-left mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+  
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 text-white col-xl-3 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Soziale Netzwerke</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <div class="col-md-6 col-lg-7 text-md-left">
+            <!-- Facebook -->
+            <button type="button" class="btn btn-social-icon text-white btn-outline-facebook"><i class="fa fa-facebook"> Facebook</i></button><br>
+            <!-- Twitter -->
+            <button type="button" class="btn btn-social-icon text-white btn-outline-twitter"><i class="fa fa-twitter"> Twitter</i></button><br>
+            <!--Instagram-->
+            <button type="button" class="btn btn-social-icon text-white btn-outline-instagram"><i class="fa fa-instagram"> Instagram</i></button>
+          </div>
+        </div>
+        <!-- Grid column -->
+  
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 text-white col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Vertreter</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Alex</p>
+          <p>Hai Ha</p>
+          <p>Mario</p>
+          </div>
+        <!-- Grid column -->
+  
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 text-white col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase font-weight-bold">Partner</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>Name:<br> Arlt</p>
+          <p>Sitz: <br>Freiburg</p>
+        </div>
+        <!-- Grid column -->
+  
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 text-white col-xl-3 mx-auto mb-md-0 mb-4">
+          <h6 class="text-uppercase font-weight-bold">Kontakt</h6>
+          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p> <i class="fa fa-map-marker" aria-hidden="true"></i> XXXX 7, 79098 Freiburg</p>
+          <p><i class="fa fa-envelope" aria-hidden="true"></i> xxxxx@t-online.de</p>
+          <p><i class="fa fa-phone" aria-hidden="true"></i> XXXXXX/ XXXXXX</p>
+          <p><i class="fa fa-fax" aria-hidden="true"></i> XXXXX / XXXX</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+    <!-- Footer Links -->
+  </footer>
+
+   <!-- Bootstrap core JavaScript -->
+   <script src="vendor/jquery/jquery.min.js"></script>
+   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
