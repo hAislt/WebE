@@ -74,7 +74,7 @@ $(document).ready(function(){
           disableDoubleClickZoom: false,
           mapTypeControl: false,
           zoom: $zoom,
-          styles: [
+ styles: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -156,6 +156,7 @@ $(document).ready(function(){
           ]
         });
       }
+
 
 
 map.addMarker({  
