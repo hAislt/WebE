@@ -1,31 +1,100 @@
+<?php
+session_start();
+error_reporting(-1);
+ini_set('display_errors','On');
+ 
+$mysqli = new mysqli('localhost', 'root', '', 'shop');
+if($mysqli->connect_error) {
+  echo 'Fehler bei der Verbindung: ' . mysqli_connect_error();
+  exit();
+  }
+  if(!$mysqli->set_charset('utf8')) {
+  echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
+  }
+
+  $userId =random_int(0,time());
+  $cardItems=0;
+
+if(isset($_COOKIE['userId'])){
+    $userId = (int) $_COOKIE['userId'];
+    }
+  if(isset($_SESSION['userId'])){
+      $userId = (int) $_SESSION['userId'];
+  }
+
+    setcookie('userId',$userId,strtotime('+30 days'));
+
+    $sql ="SELECT  *  FROM cards Where user_id=".$userId;
+    $resultcard = $mysqli->query($sql);
+    $cardItems= (int)$resultcard;
+
+    $mysqli->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="de">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="WebShop">
-    <meta name="author" content="Mario">
-  
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="main.css" rel="stylesheet">
-    <link href="css/heroic-features.css" rel="stylesheet">
-    
-    <title>Web Shop</title>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="bilder.js" type="text/javascript"></script>
-    
-  </head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="WebShop">
+<meta name="author" content="Mario">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="css/main.css" rel="stylesheet">
+<link href="css/heroic-features.css" rel="stylesheet">
+
+<title>Web Shop</title>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="bilder.js" type="text/javascript"></script>
+</head>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Web Shop</a>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+      <div class="input-group md-form form-sm form-2 pl-0">
+        <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <span class="input-group-text red lighten-3" id="basic-text1"><i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="productsMain.php">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.php">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.php">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
 <body>
-    <?php
-    include ("nav.html");
-    ?>
+   
 
     <div class="container">
         <div class="row align-items-center my-5">
@@ -60,8 +129,8 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-5">
               <h1 class="font-weight-light">Home</h1>
-              <p>Nur bei uns bekommen Sie die besten undhochwertigsts Computerzubehörteile ganz Deutschlands. Wir bieten CPUs, Grafikkarten, RAM und viels Mehr von den besten Herstellern Weltweit</p>
-              <a class="btn btn-primary" href="#">Hier Anmelden</a>
+              <p>With us can you get the best and highest quality computer accessories in Germany. We offer CPUs, graphics cards, RAM and much more from the best manufacturers worldwide</p>
+              <a class="btn btn-primary" href="#">Click here to login</a>
             </div>
             <!-- /.col-md-4 -->
           </div>
@@ -87,7 +156,7 @@
         <div class="card h-100">
           <img class="card-img-top" src="http://placehold.it/500x325" alt="">
           <div class="card-body">
-            <h4 class="card-title">Grafikkarten</h4>
+            <h4 class="card-title">GPUs</h4>
             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
           </div>
           <div class="card-footer">

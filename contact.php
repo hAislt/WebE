@@ -1,3 +1,40 @@
+<?php
+session_start();
+error_reporting(-1);
+ini_set('display_errors','On');
+ 
+
+$mysqli = new mysqli('localhost', 'root', '', 'shop');
+if($mysqli->connect_error) {
+  echo 'Fehler bei der Verbindung: ' . mysqli_connect_error();
+  exit();
+  }
+  if(!$mysqli->set_charset('utf8')) {
+  echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
+  }
+
+  $userId =random_int(0,time());
+  $cardItems=0;
+
+if(isset($_COOKIE['userId'])){
+    $userId = (int) $_COOKIE['userId'];
+    }
+  if(isset($_SESSION['userId'])){
+      $userId = (int) $_SESSION['userId'];
+  }
+
+    setcookie('userId',$userId,strtotime('+30 days'));
+
+    $sql ="SELECT  *  FROM cards Where user_id=".$userId;
+    $resultcard = $mysqli->query($sql);
+    $cardItems= (int)$resultcard;
+
+    $mysqli->close();
+    
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,22 +42,20 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Computerteile24 - Login">
+  <meta name="description" content="Web Shop - Login">
   <meta name="author" content="Hai Ha">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Computerteile24 - Login</title>
+  <title>Web Shop - Contact</title>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 
   <!-- Custom styles for this template -->
-  <link href="css/heroic-features.css" rel="stylesheet">
-  <link href="main.css" rel="stylesheet"> 
+  <link href="css/main.css" rel="stylesheet"> 
 
 </head>
 
@@ -29,7 +64,7 @@
 <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Computerteile24</a>
+      <a class="navbar-brand" href="#">Web Shop</a>
       <div class="input-group md-form form-sm form-2 pl-0">
         <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -40,20 +75,22 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="home.html">Home
+            <a class="nav-link" href="index.php">Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="produkte.html">Produkte</a>
+            <a class="nav-link" href="productsMain.php">Products</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="contact.html">Kontakt
+            <a class="nav-link" href="contact.php">Contact
                 <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Anmelden</a>
+            <a class="nav-link" href="login.php">Login</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
         </ul>
       </div>
     </div>
@@ -73,7 +110,7 @@
 				<div class="col-lg-3">
 					<div class="contact_info">
 						<div class="info_item">
-            <i class="fa fa-map-marker" aria-hidden="true"></i><h6>Deutschland, Freiburg</h6>
+            <i class="fa fa-map-marker" aria-hidden="true"></i><h6>Germany, Freiburg</h6>
 							<p>Kaiser-Joseph-Straße</p>
 						</div>
 						<div class="info_item">
@@ -87,7 +124,7 @@
 					</div>
 				</div>
 				<div class="col-lg-9">
-					<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+					<form class="row contact_form" action="request_sent.php" method="post" id="contactForm" novalidate="novalidate">
 						<div class="col-md-6">
 							<div class="form-group">
 								<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your name'">
@@ -105,7 +142,7 @@
 							</div>
 						</div>
 						<div class="col-md-12 text-right">
-							<button type="submit" value="submit" class="primary-btn">Send Message</button>
+							<button type="submit" name ="submit" value="submit" class="primary-btn">Send Message</button>
 						</div>
 					</form>
 				</div>
@@ -114,64 +151,12 @@
 	</section>
 </main>
 
-  <footer class="py-5 bg-dark">  
-    <!-- Footer Links -->
-    <div class="container text-center text-md-left mt-5">
-      <!-- Grid row -->
-      <div class="row mt-3">
-  
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 text-white col-xl-3 mx-auto mb-4">
-          <h6 class="text-uppercase font-weight-bold">Soziale Netzwerke</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <div class="col-md-6 col-lg-7 text-md-left">
-            <!-- Facebook -->
-            <button type="button" class="btn btn-social-icon text-white btn-outline-facebook"><i class="fa fa-facebook"> Facebook</i></button><br>
-            <!-- Twitter -->
-            <button type="button" class="btn btn-social-icon text-white btn-outline-twitter"><i class="fa fa-twitter"> Twitter</i></button><br>
-            <!--Instagram-->
-            <button type="button" class="btn btn-social-icon text-white btn-outline-instagram"><i class="fa fa-instagram"> Instagram</i></button>
-          </div>
-        </div>
-        <!-- Grid column -->
-  
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 text-white col-xl-2 mx-auto mb-4">
-          <h6 class="text-uppercase font-weight-bold">Vertreter</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>Alex</p>
-          <p>Hai Ha</p>
-          <p>Mario</p>
-          </div>
-        <!-- Grid column -->
-  
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 text-white col-xl-2 mx-auto mb-4">
-          <h6 class="text-uppercase font-weight-bold">Partner</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>Name:<br> Arlt</p>
-          <p>Sitz: <br>Freiburg</p>
-        </div>
-        <!-- Grid column -->
-  
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 text-white col-xl-3 mx-auto mb-md-0 mb-4">
-          <h6 class="text-uppercase font-weight-bold">Kontakt</h6>
-          <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p> <i class="fa fa-map-marker" aria-hidden="true"></i> XXXX 7, 79098 Freiburg</p>
-          <p><i class="fa fa-envelope" aria-hidden="true"></i> xxxxx@t-online.de</p>
-          <p><i class="fa fa-phone" aria-hidden="true"></i> XXXXXX/ XXXXXX</p>
-        </div>
-        <!-- Grid column -->
-      </div>
-      <!-- Grid row -->
-    </div>
-    <!-- Footer Links -->
-  </footer>
-
+<?php
+    include ("footer.html");
+    ?>
   
    <!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=PLACEHOLDER"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDan3cOoY5nwvrtvVTUU3-vMr08P8nq_9k"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
