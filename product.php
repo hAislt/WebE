@@ -32,7 +32,7 @@ if($mysqli->connect_error) {
   
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="main.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
     <link href="css/heroic-features.css" rel="stylesheet">
     
     <title>Web Shop</title>
@@ -54,7 +54,7 @@ if($mysqli->connect_error) {
 <div class="container">
 
   <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Test
+  <h1 class="my-4">Produkt
     <small></small>
   </h1>
 
@@ -82,7 +82,7 @@ if($mysqli->connect_error) {
               <div class="row"> 
               <?php for ($i=0; $i < 6; $i++):?>            
               <div class="column">
-                  <img class="demo cursor" src="<?php echo $row['bild']; ?>" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                  <img class="demo cursor" src="img/<?php echo $row['bild']; ?>" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
                 </div>
             <?php endfor?>
               </div>
