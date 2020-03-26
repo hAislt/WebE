@@ -47,9 +47,9 @@
     <input type="text" id="email" name="email" placeholder="Enter your Email" >
     <input type="password" id="password" name="password" placeholder="Enter your password"><br>
     
-    <button type="submit" name="submit" class="button">Login</button>
+    <button type="submit" name="submit" class="button">Sign up</button>
     </form>
-    <a href="login.php">haben Sie schon einen Konto?</a>
+    <a>Already have an account?  </a><a href="login.php">Log in</a>
     
     </div> 
 

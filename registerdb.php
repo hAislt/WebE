@@ -11,7 +11,7 @@ $result = mysqli_query($connection, $insert);
 if(!$result){
     echo 'Error';
 }else{
-    echo 'user verbunden';
+    header("location:login.php");
 }
 mysqli_close($connection);
 

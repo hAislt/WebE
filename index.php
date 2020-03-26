@@ -1,7 +1,11 @@
 <?php
 session_start();
 error_reporting(-1);
+
 ini_set('display_errors','On');
+$user = $_SESSION['username'];
+
+echo "<h1> Willkommen $user </h1>";
  
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -87,7 +91,7 @@ if(isset($_COOKIE['userId'])){
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
+            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
