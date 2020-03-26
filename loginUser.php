@@ -12,7 +12,7 @@ $array = mysqli_fetch_array($result);
 
 if($array['count'] > 0){
     $_SESSION['username'] = $name;
-    header("location: Welcome.php");
+    header("location: index.php");
 } else {
     echo "ERROR";
 }
