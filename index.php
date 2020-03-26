@@ -15,6 +15,10 @@ if($mysqli->connect_error) {
   $userId =random_int(0,time());
   $cardItems=0;
 
+  $sql1 = 'SELECT * FROM products';
+  $result = $mysqli->query($sql1);
+  $row;
+
 if(isset($_COOKIE['userId'])){
     $userId = (int) $_COOKIE['userId'];
     }
@@ -24,8 +28,8 @@ if(isset($_COOKIE['userId'])){
 
     setcookie('userId',$userId,strtotime('+30 days'));
 
-    $sql ="SELECT  *  FROM cards Where user_id=".$userId;
-    $resultcard = $mysqli->query($sql);
+    $sql2 ="SELECT  *  FROM cards Where user_id=".$userId;
+    $resultcard = $mysqli->query($sql2);
     $cardItems= (int)$resultcard;
 
     $mysqli->close();
@@ -107,13 +111,13 @@ if(isset($_COOKIE['userId'])){
                     </ol>
                     <div class="carousel-inner" role="listbox">
                       <div class="carousel-item active">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+                        <img class="d-block img-fluid" src="img/1125753_0__68857.jpg" alt="First slide">
                       </div>
                       <div class="carousel-item">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+                        <img class="d-block img-fluid" src="img/1313641_0__73060.jpg" alt="Second slide">
                       </div>
                       <div class="carousel-item">
-                        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+                        <img class="d-block img-fluid" src="img/1237318_0__8850603.jpg" alt="Third slide">
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -138,60 +142,22 @@ if(isset($_COOKIE['userId'])){
 
     <!-- Page Features -->
     <div class="row text-center">
-
+<?php while ($row = $result->fetch_array(MYSQLI_ASSOC)):?>
       <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/500x325" alt="">
+          <img class="card-img-top" src="img/<?php echo $row['bild']?>" alt="">
           <div class="card-body">
-            <h4 class="card-title">CPUs</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+            <h4 class="card-title"><?php echo $row['name']?></h4>
+            <p class="card-text"><?php echo $row['bescheibung_kurz']?></p>
           </div>
           <div class="card-footer">
-            <a href="produkt.html" class="btn btn-primary">Find Out More!</a>
+            <a href="<?php echo $row['link']?>" class="btn btn-primary">zum Produkt</a>
           </div>
         </div>
       </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">GPUs</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">RAM</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card h-100">
-          <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-          <div class="card-body">
-            <h4 class="card-title">Motherboards</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Find Out More!</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
+<?php endwhile ?>
+     
+   </div>
     <!-- /.row -->
 
   </div>
