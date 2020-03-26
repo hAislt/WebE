@@ -104,13 +104,13 @@ if(isset($_COOKIE['userId'])){
     <div class="container_login">
     <img src="images/icon.jpg" class="icon"> 
     <h1>Login</h1>
-    <form class ="loginform" action="inc/login-inc.php" method="POST">
-    <input type="text" name="user" placeholder="Enter your username">
-    <input type="password" name="password" placeholder="Enter your password"><br>
+    <form class ="loginform" action="login1.php" method="POST">
+    <input type="text" name="user" placeholder="Enter your username" required>
+    <input type="password" name="password" placeholder="Enter your password" required><br>
     <button type="submit" name="submit" class="button">Login</button>
     </form>
     <a href="signup.php">Registration</a>
-    <p><a href="forgotpw.php">Forgot Password?</a></p>
+    <p><a href="signup.php">Forgot Password?</a></p>
     </div> 
 
   </main>
