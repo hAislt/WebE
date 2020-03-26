@@ -156,7 +156,7 @@ if(isset($_COOKIE['userId'])){
     ?>
   
    <!--gmaps Js-->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDan3cOoY5nwvrtvVTUU3-vMr08P8nq_9k"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=PLACEHOLDER"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
