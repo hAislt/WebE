@@ -54,13 +54,10 @@ if(isset($_COOKIE['userId'])){
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="bilder.js" type="text/javascript"></script>
     
   </head>
 
  <!-- Navigation -->
- <br>
- <br>
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
@@ -107,7 +104,7 @@ if(isset($_COOKIE['userId'])){
     <div class="row">
       <div class="col-md-7">
         <a href="product.html">
-          <img class="img-fluid rounded mb-3 mb-md-0" src=" <?php echo $row['bild'] ?>" alt="">
+          <img class="img-fluid rounded mb-3 mb-md-0" src=" img/<?php echo $row['bild'] ?>" alt="">
         </a>
       </div>
       <div class="col-md-5">
