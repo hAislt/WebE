@@ -103,7 +103,7 @@ if(isset($_COOKIE['userId'])){
     <?php while ($row = $result->fetch_array(MYSQLI_ASSOC)) :?>
     <div class="row">
       <div class="col-md-7">
-        <a href="product.html">
+        <a href="<?php echo $row['link'] ?>">
           <img class="img-fluid rounded mb-3 mb-md-0" src=" img/<?php echo $row['bild'] ?>" alt="">
         </a>
       </div>
