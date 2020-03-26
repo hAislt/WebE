@@ -100,14 +100,14 @@ if(isset($_COOKIE['userId'])){
 <!-- Login Box -->
     <div class="container_login">
     <img src="images/icon.jpg" class="icon"> 
-    <h1>Login</h1>
-    <form class ="loginform" action="inc/login-inc.php" method="POST">
-    <input type="text" name="user" placeholder="Enter your username">
-    <input type="password" name="password" placeholder="Enter your password"><br>
-    <button type="submit" name="submit" class="button">Login</button>
+    <h1>Anmeldung</h1>
+    <form class ="loginform" action="login1.php" method="POST">
+    <input type="text" name="user" placeholder="Enter your username" required>
+    <input type="password" name="password" placeholder="Enter your password" required><br>
+    <button type="submit" name="submit" class="button">Einloggen</button>
     </form>
-    <a href="signup.php">Registration</a>
-    <p><a href="forgotpw.php">Forgot Password?</a></p>
+    <a href="signup.php">Haben Sie noch keinen Konto?</a>
+    
     </div> 
 
   </main>
