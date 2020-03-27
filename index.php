@@ -3,7 +3,7 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
  
-+ $user = $_SESSION['username'];
+$user = $_SESSION['username'];
 echo "<h1> Welcome $user </h1>";
  
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
