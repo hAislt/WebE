@@ -30,6 +30,21 @@ if($mysqli->connect_error) {
     $resultcard = $mysqli->query($sql);
     $cardItems= (int)$resultcard;
 
+
+    if(isset($_POST['cartb'])) { 
+
+      $sql = "INSERT INTO cards (amount, product_id, user_id)
+    
+      VALUES ('3', '12341111111', '5')";
+  
+  if (mysqli_query($mysqli, $sql)) {
+      $last_id = mysqli_insert_id($mysqli);
+      echo "New record created successfully. Last inserted ID is: " . $last_id;
+  } else {
+      echo "Error: " . $sql . "<br>" . mysqli_error($mysqli);
+  }
+  } 
+  
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +69,7 @@ if($mysqli->connect_error) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="js/bilder.js" type="text/javascript"></script>
     <script src="js/counter.js" type="text/javascript"></script>
-    <script src="js/intocards.js" type="text/javascript"></script>
+  
    
     
   </head>
@@ -155,8 +170,9 @@ if($mysqli->connect_error) {
           </div> 
           <br>
         <div class="row"style="float: right;">
-            <div >
-                <button class="produkt" onclick="intocart()" >into cart</button> 
+            <div>
+            <form method="post">
+                <input type="submit" name="cartb" class="cartb" value="into cart"/>
               </div>  
             </div>
     </div>

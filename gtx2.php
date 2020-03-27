@@ -31,6 +31,19 @@ if($mysqli->connect_error) {
     $resultcard = $mysqli->query($sql);
     $cardItems= (int)$resultcard;
 
+    if(isset($_POST['cartb'])) { 
+
+      $sql = "INSERT INTO cards (amount, product_id, user_id)
+    
+      VALUES ('3', '12341111111', '5')";
+  
+  if (mysqli_query($mysqli, $sql)) {
+      $last_id = mysqli_insert_id($mysqli);
+      echo "New record created successfully. Last inserted ID is: " . $last_id;
+  } else {
+      echo "Error: " . $sql . "<br>" . mysqli_error($mysqli);
+  }
+  } 
 ?>
 
 <!DOCTYPE html>
@@ -155,7 +168,8 @@ if($mysqli->connect_error) {
           <br>
         <div class="row"style="float: right;">
             <div >
-                <button class="produkt" >into cart</button> 
+            <form method="post">
+                <input type="submit" name="cartb" class="cartb" value="into cart"/>
               </div>  
             </div>
     </div>
