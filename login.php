@@ -66,7 +66,7 @@ if(isset($_COOKIE['userId'])){
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">Web Shop</a>
+      <a class="navbar-brand" href="index.php">Web Shop</a>
       <div class="collapse navbar-collapse" id="navbarMenu">
       <div class="input-group md-form form-sm form-2 pl-0">
         <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
