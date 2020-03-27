@@ -1,11 +1,10 @@
 <?php
 session_start();
 error_reporting(-1);
-
 ini_set('display_errors','On');
-$user = $_SESSION['username'];
-
-echo "<h1> Willkommen $user </h1>";
+ 
++ $user = $_SESSION['username'];
+echo "<h1> Welcome $user </h1>";
  
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -91,7 +90,7 @@ if(isset($_COOKIE['userId'])){
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+             <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
@@ -138,7 +137,6 @@ if(isset($_COOKIE['userId'])){
             <div class="col-lg-5">
               <h1 class="font-weight-light">Home</h1>
               <p>With us can you get the best and highest quality computer accessories in Germany. We offer CPUs, graphics cards, RAM and much more from the best manufacturers worldwide</p>
-              <a class="btn btn-primary" href="#">Click here to login</a>
             </div>
             <!-- /.col-md-4 -->
           </div>
@@ -155,7 +153,7 @@ if(isset($_COOKIE['userId'])){
             <p class="card-text"><?php echo $row['bescheibung_kurz']?></p>
           </div>
           <div class="card-footer">
-            <a href="<?php echo $row['link']?>" class="btn btn-primary">zum Produkt</a>
+            <a href="<?php echo $row['link']?>" class="btn btn-primary">go to product</a>
           </div>
         </div>
       </div>

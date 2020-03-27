@@ -49,7 +49,7 @@
     
     <button type="submit" name="submit" class="button">Sign up</button>
     </form>
-    <a>Already have an account?  </a><a href="login.php">Log in</a>
+   <a>Already have an account?  </a><a href="login.php">Log in</a>
     
     </div> 
 

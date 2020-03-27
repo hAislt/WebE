@@ -60,7 +60,7 @@ if(isset($_COOKIE['userId'])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="js/bilder.js" type="text/javascript"></script>
-    <script src="js/zaehler.js" type="text/javascript"></script>
+    <script src="js/counter.js" type="text/javascript"></script>
     
   </head>
 
@@ -106,7 +106,7 @@ if(isset($_COOKIE['userId'])){
 <div class="container">
 
   <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Produkt
+  <h1 class="my-4">Productname
     <small></small>
   </h1>
 
@@ -145,9 +145,9 @@ if(isset($_COOKIE['userId'])){
 
             <div class="btn-group col-md-3">
 
-              <button class="produkt" id="minus">-</button>
-              <input type="text" maxlength="3" size="4" value="0"></input>
-              <button class="produkt"  id="plus">+</button>
+            <button class="produkt" id="minus" onclick="countdec()">-</button>
+              <span id="amount">0</span>
+			  <button class="produkt"  id="plus" onclick="countinc()">+</button>
             
           </div>
           <div class="col-md-6"></div>
@@ -161,7 +161,7 @@ if(isset($_COOKIE['userId'])){
           <br>
         <div class="row"style="float: right;">
             <div >
-                <button class="produkt" > In den Warenkorb</button> 
+                <button class="produkt" >into cart</button> 
               </div>  
             </div>
     </div>
@@ -180,14 +180,14 @@ if(isset($_COOKIE['userId'])){
   </div>
 <hr>
 <div>
-    <h2>Produkt Infos</h2>
+    <h2>Product info</h2>
     <p><?php echo $row['beschreibung']; ?></p>
     <hr>
 </div>
 
 
 <div >
-    <h2>Ähnliche Produkte</h2>
+    <h2>Similar products</h2>
     <div class="row" style="border:solid 1px grey">
         <div class="col-md-3">
           <a href="gtx2.php">

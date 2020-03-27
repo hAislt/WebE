@@ -103,7 +103,7 @@ if(isset($_COOKIE['userId'])){
 <!-- Login Box -->
     <div class="container_login">
     <img src="images/icon.jpg" class="icon"> 
-    <h2>Log-in to your account</h1>
+        <h2>Log-in to your account</h1>
     <form class ="loginform" action="loginUser.php" method="POST">
     <input type="text" name="user" placeholder="Enter your username" required>
     <input type="password" name="password" placeholder="Enter your password" required><br>

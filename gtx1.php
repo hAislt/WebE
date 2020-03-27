@@ -53,7 +53,9 @@ if($mysqli->connect_error) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="js/bilder.js" type="text/javascript"></script>
-    <script src="js/zaehler.js" type="text/javascript"></script>
+    <script src="js/counter.js" type="text/javascript"></script>
+    <script src="js/intocards.js" type="text/javascript"></script>
+   
     
   </head>
 
@@ -99,7 +101,7 @@ if($mysqli->connect_error) {
 <div class="container">
 
   <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Produkt
+  <h1 class="my-4">Productname
     <small></small>
   </h1>
 
@@ -138,10 +140,10 @@ if($mysqli->connect_error) {
 
             <div class="btn-group col-md-3">
 
-              <button class="produkt" id="minus">-</button>
-              <input type="text" maxlength="3" size="4" value="0"></input>
-              <button class="produkt"  id="plus">+</button>
-            
+              <button class="produkt" id="minus" onclick="countdec()">-</button>
+              <span id="amount">0</span>
+			  <button class="produkt"  id="plus" onclick="countinc()">+</button>
+			  
           </div>
           <div class="col-md-6"></div>
           <div class="col-md-2 text-right">
@@ -154,7 +156,7 @@ if($mysqli->connect_error) {
           <br>
         <div class="row"style="float: right;">
             <div >
-                <button class="produkt" > In den Warenkorb</button> 
+                <button class="produkt" onclick="intocart()" >into cart</button> 
               </div>  
             </div>
     </div>
@@ -173,14 +175,14 @@ if($mysqli->connect_error) {
   </div>
 <hr>
 <div>
-    <h2>Produkt Infos</h2>
+    <h2>Product info</h2>
     <p><?php echo $row['beschreibung']; ?></p>
     <hr>
 </div>
 
 
 <div >
-    <h2>Ähnliche Produkte</h2>
+    <h2>similar products</h2>
     <div class="row" style="border:solid 1px grey">
         <div class="col-md-3">
           <a href="gtx2.php">

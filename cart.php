@@ -35,6 +35,7 @@ if($mysqli->connect_error) {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="js/counter.js" type="text/javascript"></script>
     
   </head>
 
@@ -127,7 +128,7 @@ if($mysqli->connect_error) {
                  </div>
                  <div class="card-footer">
                      <div class="pull-right" style="margin: 10px">
-                         <a href="" class="btn btn-success pull-right">Kaufen</a>
+                         <a href="" class="btn btn-success pull-right">Buy</a>
                          <div class="pull-right" style="margin: 5px">
                              Total price: <b>50.00€</b>
                          </div>
