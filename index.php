@@ -4,7 +4,6 @@ error_reporting(-1);
 ini_set('display_errors','On');
  
 $user = $_SESSION['username'];
-echo "<h1> Welcome $user </h1>";
  
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -104,6 +103,8 @@ if(isset($_COOKIE['userId'])){
    
 
     <div class="container">
+     <h1> Welcome <?php echo $user?> </h1>";
+     
         <div class="row align-items-center my-5">
             <div class="col-lg-7">
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
