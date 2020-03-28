@@ -7,7 +7,7 @@ ini_set('display_errors','On');
 $userId =random_int(0,time());
 $cardItems=0; 
 
-=======
+
 $user="";
 if(isset($_SESSION["username"])){
  $user = $_SESSION['username']; 
