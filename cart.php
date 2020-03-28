@@ -3,48 +3,58 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
 
+
+$userId =random_int(0,time());
+$cardItems=0; 
+
+=======
 $user="";
 if(isset($_SESSION["username"])){
  $user = $_SESSION['username']; 
 }
  
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "shop";
 
+#verbindung DB
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+#Verbindung Prüfen 
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 } 
 
-  $sql = 'SELECT * FROM  products  ';
+#Überprüfung UserID
+  if(isset($_COOKIE['userId'])){
+    $userId =  $_COOKIE['userId'];
+    }
+  if(isset($_SESSION['userId'])){
+      $userId =  $_SESSION['userId'];
+  }
+  setcookie('userId',$userId,strtotime('+30 days'));
+  
+  #Request der Produkte mit der entsprechenden User ID 
+  $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
   $result = $conn->query($sql);
+  
 
-  $cardItems= (int)$result;
+  #berechnungPreis 
+  $result1 = $conn->query($sql);
+  $summe=0;
+  while ($row1 = $result1->fetch_array(MYSQLI_ASSOC)){
+    $summe+=$row1["preis"]*$row1["amount"];
+  }
+  
+  #einazeige der Warenkorb-Elemente in der Nav
+  $sqlcard = "SELECT COUNT(id) FROM cards WHERE cards.user_id = $userId";
+  $resultcard = $conn->query($sqlcard);
+  $cardItems = $resultcard->num_rows ;
 
-
-     
-  if(isset($_POST['button1'])) { 
-
-    $conn = mysqli_connect($servername, $username, $password, $dbname);  
-    $sql = "INSERT INTO cards (amount, product_id, user_id)
-  <--  VALUES BITTE SELBER  -->
-    VALUES ('2', '1234', '1')";
-
-if (mysqli_query($conn, $sql)) {
-    $last_id = mysqli_insert_id($conn);
-    echo "New record created successfully. Last inserted ID is: " . $last_id;
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
-    
-    $conn->close();
-      
-  } 
-
-
+  #verbindung schließen 
+  $conn->close();
 ?>
 
 <!DOCTYPE html>
