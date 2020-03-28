@@ -3,8 +3,16 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
 
+
 $userId =random_int(0,time());
 $cardItems=0; 
+
+=======
+$user="";
+if(isset($_SESSION["username"])){
+ $user = $_SESSION['username']; 
+}
+ 
 
 $servername = "localhost";
 $username = "root";
@@ -102,7 +110,10 @@ if ($conn->connect_error) {
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
+            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>

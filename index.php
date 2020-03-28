@@ -95,6 +95,9 @@ if(isset($_COOKIE['userId'])){
              <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
           </li>
           <li class="nav-item">
+             <a class="nav-link" href="logout.php">Logout</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>
         </ul>
@@ -106,7 +109,6 @@ if(isset($_COOKIE['userId'])){
    
 
     <div class="container">
-     <h1 class="my-4"> Welcome <?php echo $user?> </h1>
      
         <div class="row align-items-center my-5">
             <div class="col-lg-7">

@@ -1,4 +1,46 @@
 <?php
+session_start();
+
+$user="";
+if(isset($_SESSION["username"])){
+ $user = $_SESSION['username']; 
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "shop";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+} 
+
+  $sql = 'SELECT * FROM  products  ';
+  $result = $conn->query($sql);
+
+  $cardItems= (int)$result;
+
+
+     
+  if(isset($_POST['button1'])) { 
+
+    $conn = mysqli_connect($servername, $username, $password, $dbname);  
+    $sql = "INSERT INTO cards (amount, product_id, user_id)
+  <--  VALUES BITTE SELBER  -->
+    VALUES ('2', '1234', '1')";
+
+if (mysqli_query($conn, $sql)) {
+    $last_id = mysqli_insert_id($conn);
+    echo "New record created successfully. Last inserted ID is: " . $last_id;
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+    
+    $conn->close();
+      
+  } 
 
 ?>
 
@@ -30,17 +72,50 @@
 
 <body>
 
-<?php
-  include ("old_nav.php");
-  ?>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="index.php">Web Shop</a>
+      <div class="collapse navbar-collapse" id="navbarMenu">
+      <div class="input-group md-form form-sm form-2 pl-0">
+        <input class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <span class="input-group-text red lighten-3" id="basic-text1"><i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="productsMain.php">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.php">Contact</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-  
   <main>
   
 <!-- Login Box -->
     
     <div class="container_login">
-    <img src="images/icon.jpg" class="icon"> 
+    <img src="img/img_login.png"  width="70" height="70" class="icon">  
     <h1>Signup</h1>
     <form class ="loginform" action="registerdb.php" method="POST" onsubmit="return validate();">
     <input type="text" id="name" name="user" placeholder="Enter your username">
