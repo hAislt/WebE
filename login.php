@@ -3,6 +3,10 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
  
+$user="";
+if(isset($_SESSION["username"])){
+ $user = $_SESSION['username']; 
+}
 
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -88,7 +92,10 @@ if(isset($_COOKIE['userId'])){
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="login.php">Login</a>
+            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
@@ -102,7 +109,7 @@ if(isset($_COOKIE['userId'])){
   
 <!-- Login Box -->
     <div class="container_login">
-    <img src="images/icon.jpg" class="icon"> 
+    <img src="img/img_login.png"  width="70" height="70" class="icon"> 
         <h2>Log-in to your account</h1>
     <form class ="loginform" action="loginUser.php" method="POST">
     <input type="text" name="user" placeholder="Enter your username" required>
