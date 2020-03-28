@@ -1,10 +1,16 @@
 <?php
+session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
 
-$userId =random_int(0,time());
+$userId =$_COOKIE["userId"];
 $cardItems=0;
  
+$user="";
+if(isset($_SESSION["username"])){
+ $user = $_SESSION['username']; 
+}
+
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
   echo 'Fehler bei der Verbindung: ' . mysqli_connect_error();
@@ -13,29 +19,24 @@ if($mysqli->connect_error) {
   if(!$mysqli->set_charset('utf8')) {
   echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
   }
-  $sql = 'SELECT * FROM products Where id=2';
-  $result = $mysqli->query($sql);
 
+  $productID=2;
+  $sql = "SELECT * FROM products Where id=$productID";
+  $result = $mysqli->query($sql);
   $row = $result->fetch_array(MYSQLI_ASSOC);
 
-  if(isset($_COOKIE['userId'])){
-    $userId = (int) $_COOKIE['userId'];
+    #einazeige der Warenkorb-Elemente in der Nav
+    $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
+    $result2 = $mysqli->query($sql);
+    $cardItems=0;
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
     }
-  if(isset($_SESSION['userId'])){
-      $userId = (int) $_SESSION['userId'];
-  }
 
-    setcookie('userId',$userId,strtotime('+30 days'));
-
-    $sql ="SELECT  count(id)  FROM cards Where user_id=".$userId;
-    $resultcard = $mysqli->query($sql);
-    $cardItems= (int)$resultcard;
-
-    if(isset($_POST['cartb'])) { 
-
-      $sql = "INSERT INTO cards (amount, product_id, user_id)
+   
+    if(isset($_POST['cartb'])) {  
     
-      VALUES ('3', '12341111111', '5')";
+      $sql = "INSERT INTO cards (amount, product_id, user_id)VALUES ($_POST[amount], $productID, $userId)";
   
   if (mysqli_query($mysqli, $sql)) {
       $last_id = mysqli_insert_id($mysqli);
@@ -44,6 +45,7 @@ if($mysqli->connect_error) {
       echo "Error: " . $sql . "<br>" . mysqli_error($mysqli);
   }
   } 
+  $mysqli->close();
 ?>
 
 <!DOCTYPE html>
@@ -68,12 +70,14 @@ if($mysqli->connect_error) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="js/bilder.js" type="text/javascript"></script>
     <script src="js/counter.js" type="text/javascript"></script>
+  
+   
     
   </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
@@ -99,9 +103,16 @@ if($mysqli->connect_error) {
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
+          <?php if($user==""):?>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($user!=""):?>
+          <li class="nav-item">
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
+          </li>
+          <?php endif?>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>
@@ -113,7 +124,7 @@ if($mysqli->connect_error) {
 <div class="container">
 
   <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Produkt
+  <h1 class="my-4">Productname
     <small></small>
   </h1>
 
@@ -148,14 +159,10 @@ if($mysqli->connect_error) {
 
           </div>
           <br>
+          <form method="post">
           <div class="row">
-
             <div class="btn-group col-md-3">
-
-              <button class="produkt" id="minus" onclick="countdec()">-</button>
-              <span id="amount">0</span>
-              <button class="produkt"  id="plus" onclick="countinc()">+</button>
-            
+              <input id="amount" type="number" name="amount" min="1" value="1" ></input>
           </div>
           <div class="col-md-6"></div>
           <div class="col-md-2 text-right">
@@ -167,11 +174,12 @@ if($mysqli->connect_error) {
           </div> 
           <br>
         <div class="row"style="float: right;">
-            <div >
-            <form method="post">
+            <div>
+            
                 <input type="submit" name="cartb" class="cartb" value="into cart"/>
-              </div>  
-            </div>
+              </div>     
+            </div> 
+          </form>
     </div>
 
     <div class="col-md-4">
@@ -188,23 +196,23 @@ if($mysqli->connect_error) {
   </div>
 <hr>
 <div>
-    <h2>Produkt Infos</h2>
+    <h2>Product info</h2>
     <p><?php echo $row['beschreibung']; ?></p>
     <hr>
 </div>
 
 
 <div >
-    <h2>Ähnliche Produkte</h2>
+    <h2>similar products</h2>
     <div class="row" style="border:solid 1px grey">
         <div class="col-md-3">
-          <a href="gtx1.php">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="img/1300282_0__72667.jpg" alt="">
+          <a href="gtx2.php">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="img/1125753_0__68857.jpg" alt="">
           </a>
         </div>
         <div class="col-md-3">
           <h3>GTX</h3>
-          <p>6GB MSI GeForce GTX 1660 ARMOR</p>
+          <p>4GB MSI GeForce GTX 1050 Ti GAMING</p>
         </div>
         <br>
       

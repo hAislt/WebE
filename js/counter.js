@@ -11,3 +11,7 @@ function countdec() {
 	document.getElementById('amount').innerText = counter;
 	}
 }
+
+function getCounter(){
+	return counter;
+}

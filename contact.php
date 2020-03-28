@@ -3,6 +3,11 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
  
+$user="";
+if(isset($_SESSION["username"])){
+ $user = $_SESSION['username']; 
+}
+$userId =$_COOKIE['userId'];
 
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -13,21 +18,15 @@ if($mysqli->connect_error) {
   echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
   }
 
-  $userId =random_int(0,time());
   $cardItems=0;
 
-if(isset($_COOKIE['userId'])){
-    $userId = (int) $_COOKIE['userId'];
+    #einazeige der Warenkorb-Elemente in der Nav
+    $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
+    $result2 = $mysqli->query($sql);
+    $cardItems=0;
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
     }
-  if(isset($_SESSION['userId'])){
-      $userId = (int) $_SESSION['userId'];
-  }
-
-    setcookie('userId',$userId,strtotime('+30 days'));
-
-    $sql ="SELECT  *  FROM cards Where user_id=".$userId;
-    $resultcard = $mysqli->query($sql);
-    $cardItems= (int)$resultcard;
 
     $mysqli->close();
     
@@ -62,7 +61,7 @@ if(isset($_COOKIE['userId'])){
 <body>
 
 <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <a class="navbar-brand" href="index.php">Web Shop</a>
       <div class="input-group md-form form-sm form-2 pl-0">
@@ -86,9 +85,16 @@ if(isset($_COOKIE['userId'])){
                 <span class="sr-only">(current)</span>
             </a>
           </li>
+          <?php if(isset($_SESSION["username"])):?>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($_SESSION["username"]=""):?>
+          <li class="nav-item">
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
+          </li>
+          <?php endif?>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
         </ul>

@@ -3,6 +3,7 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
  
+$userId =random_int(0,time());
 $user="";
 if(isset($_SESSION["username"])){
  $user = $_SESSION['username']; 
@@ -17,9 +18,6 @@ if($mysqli->connect_error) {
   echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
   }
 
-  $userId =random_int(0,time());
-  $cardItems=0;
-
 if(isset($_COOKIE['userId'])){
     $userId = (int) $_COOKIE['userId'];
     }
@@ -29,9 +27,14 @@ if(isset($_COOKIE['userId'])){
 
     setcookie('userId',$userId,strtotime('+30 days'));
 
-    $sql ="SELECT  *  FROM cards Where user_id=".$userId;
-    $resultcard = $mysqli->query($sql);
-    $cardItems= (int)$resultcard;
+    
+    #einazeige der Warenkorb-Elemente in der Nav
+    $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
+    $result2 = $mysqli->query($sql);
+    $cardItems=0;
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
+    }
 
     $mysqli->close();
 ?>
@@ -65,7 +68,7 @@ if(isset($_COOKIE['userId'])){
 <body>
 
  <!-- Navigation -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
@@ -91,12 +94,16 @@ if(isset($_COOKIE['userId'])){
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
-          </li>
+          <?php if(isset($_SESSION["username"])):?>
           <li class="nav-item">
-            <a class="nav-link" href="logout.php">Logout</a>
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($_SESSION["username"]=""):?>
+          <li class="nav-item">
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
+          </li>
+          <?php endif?>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>

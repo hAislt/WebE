@@ -5,6 +5,7 @@ $user="";
 if(isset($_SESSION["username"])){
  $user = $_SESSION['username']; 
 }
+$userId =$_COOKIE['userId'];
 
 $servername = "localhost";
 $username = "root";
@@ -17,11 +18,14 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 } 
 
-  $sql = 'SELECT * FROM  products  ';
-  $result = $conn->query($sql);
-
-  $cardItems= (int)$result;
-
+ 
+    #einazeige der Warenkorb-Elemente in der Nav
+    $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
+    $result2 = $conn->query($sql);
+    $cardItems=0;
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
+    }
 
      
   if(isset($_POST['button1'])) { 
@@ -61,7 +65,7 @@ if (mysqli_query($conn, $sql)) {
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-  <script src="validate.js"></script>
+  <script src="js/validate.js"></script>
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -73,7 +77,7 @@ if (mysqli_query($conn, $sql)) {
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
@@ -99,9 +103,16 @@ if (mysqli_query($conn, $sql)) {
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+          <?php if(isset($_SESSION["username"])):?>
+          <li class="nav-item">
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($_SESSION["username"]=""):?>
+          <li class="nav-item">
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
+          </li>
+          <?php endif?>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>

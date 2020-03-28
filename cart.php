@@ -3,10 +3,8 @@ session_start();
 error_reporting(-1);
 ini_set('display_errors','On');
 
-
-$userId =random_int(0,time());
+$userId =$_COOKIE['userId'];
 $cardItems=0; 
-
 
 $user="";
 if(isset($_SESSION["username"])){
@@ -26,20 +24,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 } 
-
-#Überprüfung UserID
-  if(isset($_COOKIE['userId'])){
-    $userId =  $_COOKIE['userId'];
-    }
-  if(isset($_SESSION['userId'])){
-      $userId =  $_SESSION['userId'];
-  }
-  setcookie('userId',$userId,strtotime('+30 days'));
   
   #Request der Produkte mit der entsprechenden User ID 
   $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
   $result = $conn->query($sql);
-  
 
   #berechnungPreis 
   $result1 = $conn->query($sql);
@@ -49,9 +37,11 @@ if ($conn->connect_error) {
   }
   
   #einazeige der Warenkorb-Elemente in der Nav
-  $sqlcard = "SELECT COUNT(id) FROM cards WHERE cards.user_id = $userId";
-  $resultcard = $conn->query($sqlcard);
-  $cardItems = $resultcard->num_rows ;
+  $result2 = $conn->query($sql);
+  $cardItems=0;
+  while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
+  }
 
   #verbindung schließen 
   $conn->close();
@@ -83,7 +73,7 @@ if ($conn->connect_error) {
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
@@ -109,12 +99,16 @@ if ($conn->connect_error) {
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
+          <?php if(isset($_SESSION["username"])):?>
           <li class="nav-item">
-            <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($_SESSION["username"]=""):?>
           <li class="nav-item">
-            <a class="nav-link" href="logout.php">Logout</a>
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
           </li>
+          <?php endif?>
           <li class="nav-item active">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>
@@ -147,10 +141,7 @@ if ($conn->connect_error) {
                                  </div>
                                  <div class="col-4 col-sm-4 col-md-4">
                                      <div class="quantity">
-                                         <input type="button" value="+" class="plus">
-                                         <input type="text" step="1" max="99" min="1" value="1" title="Qty" class="qty"
-                                                size="4">
-                                         <input type="button" value="-" class="minus">
+                                         <input type="number" step="1" max="99" min="1" value="<?php echo $row["amount"]?>" title="Qty" class="qty"size="4">
                                      </div>
                                  </div>
                                  <div class="col-2 col-sm-2 col-md-2 text-right">
@@ -167,7 +158,7 @@ if ($conn->connect_error) {
 
                         
                      <div class="pull-right">
-                         <a href="" class="btn btn-outline-secondary pull-right">
+                         <a href="cart.php" class="btn btn-outline-secondary pull-right">
                              Update shopping cart
                          </a>
                      </div>
@@ -175,11 +166,11 @@ if ($conn->connect_error) {
                  
                  <div class="card-footer">
                      <div class="pull-right" style="margin: 10px">
-                         <form method="post" >
+                         <form action=order.php method="post" >
                          <input type="submit" name="button1" class="btn btn-success pull-right"
                             value="Buy"/>
                          <div class="pull-right" style="margin: 5px">
-                             Total price: <b>50.00€</b>
+                             Total price: <b><?php echo $summe?>€</b>
                          </div>
                      </div>
                  </div>

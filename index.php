@@ -7,6 +7,7 @@ $user="";
 if(isset($_SESSION["username"])){
  $user = $_SESSION['username']; 
 }
+$userId =random_int(0,time());
  
 $mysqli = new mysqli('localhost', 'root', '', 'shop');
 if($mysqli->connect_error) {
@@ -16,9 +17,6 @@ if($mysqli->connect_error) {
   if(!$mysqli->set_charset('utf8')) {
   echo 'Fehler beim Laden von UTF-8: ' . mysqli_error();
   }
-
-  $userId =random_int(0,time());
-  $cardItems=0;
 
   $sql1 = 'SELECT * FROM products';
   $result = $mysqli->query($sql1);
@@ -32,10 +30,15 @@ if(isset($_COOKIE['userId'])){
   }
 
     setcookie('userId',$userId,strtotime('+30 days'));
+  
+    #einazeige der Warenkorb-Elemente in der Nav
+    $sql = "SELECT * FROM  cards c, products p WHERE  user_id=$userId and c.product_id=p.id ";
+    $result2 = $mysqli->query($sql);
+    $cardItems=0;
+    while ($row2 = $result2->fetch_array(MYSQLI_ASSOC)){
+    $cardItems++;
+    }
 
-    $sql2 ="SELECT  *  FROM cards Where user_id=".$userId;
-    $resultcard = $mysqli->query($sql2);
-    $cardItems= (int)$resultcard;
 
     $mysqli->close();
 ?>
@@ -59,13 +62,13 @@ if(isset($_COOKIE['userId'])){
 <title>Web Shop</title>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="bilder.js" type="text/javascript"></script>
 </head>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
@@ -91,12 +94,16 @@ if(isset($_COOKIE['userId'])){
           <li class="nav-item">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
+          <?php if(isset($_SESSION["username"])):?>
           <li class="nav-item">
-             <a class="nav-link" href="login.php">Login(<?php echo $user ?>)</a>
+             <a class="nav-link" href="login.php">Login</a>
           </li>
+          <?php endif?>
+          <?php if($_SESSION["username"]=""):?>
           <li class="nav-item">
-             <a class="nav-link" href="logout.php">Logout</a>
+             <a class="nav-link" href="logout.php">Logout(<?php echo $user ?>)</a>
           </li>
+          <?php endif?>
           <li class="nav-item">
             <a class="nav-link" href="cart.php">Cart(<?php echo $cardItems ?>)</a>
           </li>
@@ -109,7 +116,7 @@ if(isset($_COOKIE['userId'])){
    
 
     <div class="container">
-     
+     <h1 class="my-4">Welcome <?php echo $user?></h1>
         <div class="row align-items-center my-5">
             <div class="col-lg-7">
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
